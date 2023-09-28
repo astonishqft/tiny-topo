@@ -1,0 +1,17 @@
+{
+  "name": "@qftjs/tiny-topo-core",
+  "version": "1.0.0",
+  "description": "tiny-topo-core",
+  "main": "dist/index.umd.js",
+  "module": "dist/index.mjs",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite dev"
+  },
+  "author": "qi.futao",
+  "license": "ISC"
+}
