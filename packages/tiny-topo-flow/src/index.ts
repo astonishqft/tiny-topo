@@ -1,8 +1,13 @@
+import helloTinyTopoCore from '@qftjs/tiny-topo-core';
+
 interface Iopts {
   name: string;
 }
-const hello = (opts: Iopts) => {
+
+const helloTinyTopoFlow = (opts: Iopts) => {
   console.log(`hello:${opts.name}`);
 };
 
-hello({ name: 'qifutao' });
+helloTinyTopoCore({ name: 'tiny-topo-core' });
+
+export default helloTinyTopoFlow;

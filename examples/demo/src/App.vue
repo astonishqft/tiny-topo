@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import { onMounted } from 'vue';
 import HelloWorld from './components/HelloWorld.vue'
+import tinyTopoFlow from '@qftjs/tiny-topo-flow'
+
+onMounted(() => {
+  tinyTopoFlow({ name: 'tiny-topo-flow'});
+})
 </script>
 
 <template>

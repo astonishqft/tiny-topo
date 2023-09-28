@@ -1,8 +1,8 @@
 interface Iopts {
   name: string;
 }
-const hello = (opts: Iopts) => {
+const helloTinyTopoCore = (opts: Iopts) => {
   console.log(`hello:${opts.name}`);
 };
 
-hello({ name: 'qifutao' });
+export default helloTinyTopoCore;

@@ -9,7 +9,7 @@ module.exports = {
     'linebreak-style': [0, 'error', 'windows'],
     'indent': ['error', 2, { SwitchCase: 1 }], // error类型，缩进2个空格
     'space-before-function-paren': 0, // 在函数左括号的前面是否有空格
-    'eol-last': 0, // 不检测新文件末尾是否有空行
+    'eol-last': 2, // 不检测新文件末尾是否有空行
     'semi': ['error', 'always'], // 在语句后面加分号
     'quotes': ['error', 'single'],// 字符串使用单双引号,double,single
     'no-console': ['error', { allow: ['log', 'warn'] }],// 允许使用console.log()
