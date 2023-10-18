@@ -67,8 +67,13 @@ importers:
   packages/tiny-topo-flow:
     specifiers:
       '@qftjs/tiny-topo-core': workspace:^1.0.0
+      tslib: ^2.6.2
+      zrender: ^5.4.4
     dependencies:
       '@qftjs/tiny-topo-core': link:../tiny-topo-core
+      zrender: registry.npmmirror.com/zrender/5.4.4
+    devDependencies:
+      tslib: registry.npmmirror.com/tslib/2.6.2
 
   packages/tiny-topo-utils:
     specifiers: {}
@@ -3515,6 +3520,12 @@ packages:
     version: 1.14.1
     dev: true
 
+  registry.npmmirror.com/tslib/2.3.0:
+    resolution: {integrity: sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/tslib/-/tslib-2.3.0.tgz}
+    name: tslib
+    version: 2.3.0
+    dev: false
+
   registry.npmmirror.com/tslib/2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/tslib/-/tslib-2.6.2.tgz}
     name: tslib
@@ -3906,3 +3917,11 @@ packages:
     optionalDependencies:
       commander: registry.npmmirror.com/commander/9.5.0
     dev: true
+
+  registry.npmmirror.com/zrender/5.4.4:
+    resolution: {integrity: sha512-0VxCNJ7AGOMCWeHVyTrGzUgrK4asT4ml9PEkeGirAkKNYXYzoPJCLvmyfdoOXcjTHPs10OZVMfD1Rwg16AZyYw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/zrender/-/zrender-5.4.4.tgz}
+    name: zrender
+    version: 5.4.4
+    dependencies:
+      tslib: registry.npmmirror.com/tslib/2.3.0
+    dev: false
