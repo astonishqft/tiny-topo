@@ -1,7 +1,7 @@
 import type Element from 'zrender/lib/Element';
 import Command from './command';
 
-class AddNodes implements Command {
+class AddNodesCommand implements Command {
   private nodes: Element[];
   private flowEditor: FlowEditor;
 
@@ -23,7 +23,7 @@ class AddNodes implements Command {
   }
 }
 
-class AddConnector implements Command {
+class AddConnectorCommand implements Command {
   private onnector: Connector;
   private flowEditor: any;
 
@@ -46,6 +46,6 @@ class AddConnector implements Command {
 }
 
 export {
-  AddNodes,
-  AddConnector
+  AddNodesCommand,
+  AddConnectorCommand
 };

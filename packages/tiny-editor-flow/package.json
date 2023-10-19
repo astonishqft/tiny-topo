@@ -1,7 +1,7 @@
 {
-  "name": "@qftjs/tiny-topo-flow",
+  "name": "@qftjs/tiny-editor-flow",
   "version": "1.0.0",
-  "description": "tiny-topo-flow",
+  "description": "tiny-editor-flow",
   "main": "dist/index.umd.js",
   "module": "dist/index.mjs",
   "typings": "dist/index.d.ts",
@@ -15,7 +15,7 @@
   "author": "qi.futao",
   "license": "ISC",
   "dependencies": {
-    "@qftjs/tiny-topo-core": "workspace:^1.0.0",
+    "@qftjs/tiny-editor-core": "workspace:^1.0.0",
     "zrender": "^5.4.4"
   },
   "devDependencies": {

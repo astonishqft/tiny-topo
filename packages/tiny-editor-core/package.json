@@ -1,7 +1,7 @@
 {
-  "name": "@qftjs/tiny-topo-core",
+  "name": "@qftjs/tiny-editor-core",
   "version": "1.0.0",
-  "description": "tiny-topo-core",
+  "description": "tiny-editor-core",
   "main": "dist/index.umd.js",
   "module": "dist/index.mjs",
   "typings": "dist/index.d.ts",

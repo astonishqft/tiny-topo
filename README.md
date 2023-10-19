@@ -1,4 +1,4 @@
-# tiny-topo 大纲简介
+# tiny-editor 大纲简介
 
 ## 支持Typescript
 
