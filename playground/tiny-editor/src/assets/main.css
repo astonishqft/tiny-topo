@@ -1,0 +1,8 @@
+@import './base.css';
+
+@import './iconfont/iconfont.css';
+
+#app, body {
+  height: 100%;
+}
+
