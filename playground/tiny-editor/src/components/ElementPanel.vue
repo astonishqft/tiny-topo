@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { inject } from 'vue'
 import IconCircle from './icons/Circle.vue'
 import IconRect from './icons/Rect.vue'
 import IconRectRadius from './icons/RectRadius.vue'
@@ -25,6 +26,7 @@ import IconMinus from './icons/Minus.vue'
 import IconTimes from './icons/Times.vue'
 import IconDivide from './icons/Divide.vue'
 
+const $bus = inject('$bus')
 const panelList = [
   {
     component: IconCircle,
@@ -128,15 +130,23 @@ const panelList = [
   }
 ]
 
-const picList = []
+const dragStart = (item) => {
+  $bus.emit('dragStart', item)
+}
 </script>
 
 <template>
   <div class="element-panel">
     <h1 class="element-category-title">普通节点</h1>
     <ul class="element-category">
-      <li v-for="icon in panelList" :key="icon.name" class="element-item">
-        <component :is="icon.component" class="svg-node" />
+      <li
+        v-for="item in panelList"
+        :key="item.name"
+        draggable="true"
+        @dragstart="dragStart($event, item)"
+        class="element-item"
+      >
+        <component :is="item.component" class="svg-node" />
       </li>
     </ul>
     <h1 class="element-category-title">图片节点</h1>

@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "build": "vite build",
-    "dev": "vite dev"
+    "dev": "vite build --watch"
   },
   "author": "qi.futao",
   "license": "ISC"
