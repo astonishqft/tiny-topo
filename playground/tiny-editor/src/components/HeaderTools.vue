@@ -1,8 +1,7 @@
 <script setup lang="ts">
-// import { reactive } from 'vue'
-defineProps<{
-  msg: string
-}>()
+import { inject } from 'vue'
+
+
 
 interface ToolConfig {
   name: string

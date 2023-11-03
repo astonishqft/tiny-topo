@@ -10,7 +10,7 @@ type EventsType = Record<string, EventType[]>
 type CallbackType = (...args: any) => void
 
 class EventEmitter {
-  private events: EventsType = {};
+  private events: EventsType = {}
 
   /**
    * 事件监听
@@ -61,7 +61,7 @@ class EventEmitter {
   emit(eventName: string, eventArgs: EventArgs) {
     eventName?.split(',').forEach((eventKey: string) => {
       eventKey = eventKey.trim()
-      const events = this.events[eventKey]
+      const events = this.events[eventKey] || []
       let { length } = events
 
       for (let i = 0; i < length; i++) {

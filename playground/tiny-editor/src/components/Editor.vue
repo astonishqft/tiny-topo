@@ -1,7 +1,9 @@
 <script setup lang="ts">
-defineProps<{
-  msg: string
-}>()
+import { inject } from 'vue'
+
+const $bus = inject('$bus')
+
+$bus.on('dragStart')
 </script>
 
 <template>
