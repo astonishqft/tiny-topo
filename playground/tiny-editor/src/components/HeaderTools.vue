@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import { inject } from 'vue'
-
-
-
 interface ToolConfig {
   name: string
   icon: string

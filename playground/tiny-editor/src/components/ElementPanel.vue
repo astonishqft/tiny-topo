@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { inject } from 'vue'
 import IconCircle from './icons/Circle.vue'
 import IconRect from './icons/Rect.vue'
 import IconRectRadius from './icons/RectRadius.vue'
@@ -26,112 +25,115 @@ import IconMinus from './icons/Minus.vue'
 import IconTimes from './icons/Times.vue'
 import IconDivide from './icons/Divide.vue'
 
-const $bus = inject('$bus')
-const panelList = [
+import type { ElementItemType, ElementListType } from './types'
+
+const elementList: ElementListType = [
   {
     component: IconCircle,
-    name: 'circle'
+    nodeType: 'circle'
   },
   {
     component: IconRect,
-    name: 'rect'
+    nodeType: 'rect'
   },
   {
     component: IconRectRadius,
-    name: 'rectRadius'
+    nodeType: 'rectRadius'
   },
   {
     component: IconActor,
-    name: 'actor'
+    nodeType: 'actor'
   },
   {
     component: IconCylinde,
-    name: 'cylinde'
+    nodeType: 'cylinde'
   },
   {
     component: IconDiamond,
-    name: 'diamond'
+    nodeType: 'diamond'
   },
   {
     component: IconEllipse,
-    name: 'ellipse'
+    nodeType: 'ellipse'
   },
   {
     component: IconParallelogram,
-    name: 'parallelogram'
+    nodeType: 'parallelogram'
   },
   {
     component: IconText,
-    name: 'text'
+    nodeType: 'text'
   },
   {
     component: IconTriangle,
-    name: 'triangle'
+    nodeType: 'triangle'
   },
   {
     component: IconLeftArrow,
-    name: 'leftArrow'
+    nodeType: 'leftArrow'
   },
   {
     component: IconRightArrow,
-    name: 'rightArrow'
+    nodeType: 'rightArrow'
   },
   {
     component: IconHorizontalArrow,
-    name: 'horizontalArrow'
+    nodeType: 'horizontalArrow'
   },
   {
     component: IconUpArrow,
-    name: 'upArrow'
+    nodeType: 'upArrow'
   },
   {
     component: IconDownArrow,
-    name: 'downArrow'
+    nodeType: 'downArrow'
   },
   {
     component: IconVerticalArrow,
-    name: 'verticalArrow'
+    nodeType: 'verticalArrow'
   },
   {
     component: IconPentagon,
-    name: 'pentagon'
+    nodeType: 'pentagon'
   },
   {
     component: IconHexagon,
-    name: 'hexagon'
+    nodeType: 'hexagon'
   },
   {
     component: IconSeptagon,
-    name: 'septagon'
+    nodeType: 'septagon'
   },
   {
     component: IconHeptagon,
-    name: 'heptagon'
+    nodeType: 'heptagon'
   },
   {
     component: IconTrapezoid,
-    name: 'trapezoid'
+    nodeType: 'trapezoid'
   },
   {
     component: IconCross,
-    name: 'cross'
+    nodeType: 'cross'
   },
   {
     component: IconMinus,
-    name: 'minus'
+    nodeType: 'minus'
   },
   {
     component: IconTimes,
-    name: 'times'
+    nodeType: 'times'
   },
   {
     component: IconDivide,
-    name: 'divide'
+    nodeType: 'divide'
   }
 ]
 
-const dragStart = (item) => {
-  $bus.emit('dragStart', item)
+const dragStart = (event: DragEvent, element: ElementItemType) => {
+  if (event.dataTransfer) {
+    event.dataTransfer.setData('addNode', JSON.stringify(element))
+  }
 }
 </script>
 
@@ -140,19 +142,19 @@ const dragStart = (item) => {
     <h1 class="element-category-title">普通节点</h1>
     <ul class="element-category">
       <li
-        v-for="item in panelList"
-        :key="item.name"
-        draggable="true"
-        @dragstart="dragStart($event, item)"
+        v-for="element in elementList"
+        :key="element.nodeType"
+        :draggable="true"
+        @dragstart="dragStart($event, element)"
         class="element-item"
       >
-        <component :is="item.component" class="svg-node" />
+        <component :is="element.component" class="svg-node" />
       </li>
     </ul>
     <h1 class="element-category-title">图片节点</h1>
     <span
       class="icon iconfont upload-image icon-a-tianjiashangchuantupian"
-      :title="上传图片"
+      :title="'上传图片'"
     ></span>
   </div>
 </template>
