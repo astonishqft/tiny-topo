@@ -1,5 +1,5 @@
 import * as zrender from 'zrender'
-
+import { Shape } from './shapes/shape'
 import type { TinyFlowEditorOptions, AddNodeType } from './types'
 
 const { Group } = zrender;
@@ -9,6 +9,7 @@ class TinyFlowEditor extends Group {
   private nodes: zrender.Element[] = []
   private connectLines: zrender.Element[] = []
   private groups: zrender.Group[] = []
+  private shape: Shape
 
   constructor(opts: TinyFlowEditorOptions) {
     super();
@@ -23,6 +24,7 @@ class TinyFlowEditor extends Group {
       devicePixelRatio: devicePixelRatio || 2
     })
 
+    this.shape = new Shape(this);
     this._zr.add(this);
   }
 
@@ -30,6 +32,10 @@ class TinyFlowEditor extends Group {
     console.log('nodeType', nodeType)
     console.log('offsetX', offsetX)
     console.log('offsetY', offsetY)
+
+    const node = this.shape.getShape(nodeType, { offsetX, offsetY })
+
+    this._zr.add(node.getNode())
   }
 }
 

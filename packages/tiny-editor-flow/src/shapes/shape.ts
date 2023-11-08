@@ -11,17 +11,17 @@ const shapes = {
 }
 
 export class Shape {
-  private nodeType: NodeType
+  // private nodeType: NodeType
   private editor: TinyFlowEditor
 
-  constructor(nodeType: NodeType, editor: TinyFlowEditor) {
-    this.nodeType = nodeType;
+  constructor(editor: TinyFlowEditor) {
+    // this.nodeType = nodeType;
     this.editor = editor;
     
 
   }
 
-  getShape(config: IShapeConfig) {
-    return new shapes[this.nodeType](this.editor, config)
+  getShape(nodeType: NodeType, config: IShapeConfig) {
+    return new shapes[nodeType](this.editor, config)
   }
 }
