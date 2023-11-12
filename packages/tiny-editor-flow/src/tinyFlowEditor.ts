@@ -24,14 +24,24 @@ class TinyFlowEditor extends Group {
       devicePixelRatio: devicePixelRatio || 2
     })
 
-    this.shapeManage = new ShapeManage(this)
+    this.shapeManage = new ShapeManage()
     this._zr.add(this);
+
+    this.initEvent()
   }
 
-  addNode({ nodeType, offsetX, offsetY }: AddNodeType) {
-    const node = this.shapeManage.getShape(nodeType, { offsetX, offsetY })
+  addNode({ nodeType, shapeConfig }: AddNodeType) {
+    const { x, y } = shapeConfig
+    if (x && y) {
+      const node = this.shapeManage.getShape(nodeType, { x, y })
+      this._zr.add(node)
+    }
+  }
 
-    this._zr.add(node)
+  initEvent() {
+    this._zr.on('selectNode', ({ node }) => {
+      node.active()
+    })
   }
 }
 

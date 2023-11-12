@@ -1,3 +1,5 @@
+import * as zrender from 'zrender'
+
 export interface TinyFlowEditorOptions {
   /**
    * DOM 容器
@@ -29,11 +31,5 @@ export type NodeType = 'circle'
 
 export interface AddNodeType {
   nodeType: NodeType
-  offsetX: number
-  offsetY: number
-}
-
-export interface IShapeConfig {
-  offsetX: number
-  offsetY: number
+  shapeConfig: zrender.PathProps
 }

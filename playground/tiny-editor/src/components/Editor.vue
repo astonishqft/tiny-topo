@@ -27,7 +27,7 @@ const drop = (event: DragEvent) => {
 
   if (editor.value) {
     console.log('editor', editor.value)
-    editor.value.addNode({ nodeType, offsetX, offsetY })
+    editor.value.addNode({ nodeType, shapeConfig: { x: offsetX, y: offsetY }})
   }
 }
 

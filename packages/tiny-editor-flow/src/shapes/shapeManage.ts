@@ -1,9 +1,9 @@
 import * as zrender from 'zrender'
-import Circle from './circle';
-import type { NodeType, IShapeConfig } from '../types';
-import TinyFlowEditor from '../tinyFlowEditor';
+import Circle from './circle'
+import type { NodeType } from '../types'
 import { applyMixins } from './applyMixins'
 
+const { merge } = zrender.util
 
 const shapeMap = {
   circle: Circle
@@ -29,54 +29,53 @@ const shapeConfigMap = {
 }
 
 abstract class ICommonShape {
-  attr(keyOrObj: zrender.ElementProps): this
+  selected: boolean = false
+  abstract active(): void
+  attr(name: string, value: any){}
 }
 
-class CommonShape extends ICommonShape{
-  private position: Array<number> = []
-  private style: zrender.PathStyleProps = {}
-
+class CommonShape extends ICommonShape {
   constructor() {
     super()
+    this.selected = false
   }
 
-  getNodeConfig() {
-    return {
-      position: this.position,
-      style: this.style
-    }
+  active() {
+    this.selected = true
+
+    this.attr('style', {
+      shadowColor:'yellow',
+      shadowBlur:3
+    })
   }
 }
 
 export class ShapeManage {
-  // private nodeType: NodeType
-  private editor: TinyFlowEditor
-
-  constructor(editor: TinyFlowEditor) {
-    // this.nodeType = nodeType;
-    this.editor = editor;
-  }
-
-  getShape(nodeType: NodeType, config: IShapeConfig) {
-    const { offsetX, offsetY } = config;
+  getShape(nodeType: NodeType, config: zrender.PathProps) {
+    const { x, y, style, shape } = config
 
     const shapeConfig = shapeConfigMap[nodeType]
 
-    if (offsetX && offsetY) {
-      shapeConfig.position = [offsetX, offsetY]
+    const shapeNode = shapeMap[nodeType] 
+    applyMixins(shapeNode, [CommonShape])
+
+    const shapeInstance = new shapeNode(shapeConfig)
+
+    // 设置初始位置
+    if (x && y) {
+      shapeInstance.setPosition([x, y])
     }
 
-    const shape = shapeMap[nodeType] 
-    applyMixins(shape, [CommonShape]);
+    if (style) {
+      shapeConfig.style = merge(shapeConfig.style, style)
+    }
 
-    const shapeInstance = new shape(shapeConfig)
-
-    shapeInstance.setPosition = () => {
-
+    if (shape) {
+      shapeConfig.shape = merge(shapeConfig.shape, shape)
     }
   
     shapeInstance.on('click', () => {
-      console.log(shapeInstance)
+      shapeInstance.__zr.trigger('selectNode', { node: shapeInstance })
     })
 
     shapeInstance.on('dragstart', () => {
