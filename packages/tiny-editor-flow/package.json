@@ -16,7 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "@qftjs/tiny-editor-core": "workspace:^1.0.0",
-    "zrender": "^5.4.4"
+    "fabric": "6.0.0-beta15"
   },
   "devDependencies": {
     "tslib": "^2.6.2"

@@ -10,7 +10,8 @@
   ],
   "scripts": {
     "build": "vite build",
-    "dev": "vite build --watch"
+    "dev": "vite build --watch",
+    "lint": "eslint src/**/*.ts"
   },
   "author": "qi.futao",
   "license": "ISC"

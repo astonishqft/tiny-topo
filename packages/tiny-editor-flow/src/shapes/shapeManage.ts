@@ -1,30 +1,41 @@
-import * as zrender from 'zrender'
 import Circle from './circle'
+import Rect from './rect'
+import RectRadius from './rectRadius'
 import type { NodeType } from '../types'
 import { applyMixins } from './applyMixins'
-
-const { merge } = zrender.util
+import type { TFabricObjectProps } from 'fabric'
 
 const shapeMap = {
-  circle: Circle
+  circle: Circle,
+  rect: Rect,
+  rectRadius: RectRadius
 }
 
-const commonStyle = {
+const commonShapeConfig = {
   fill: '#fff',
   stroke: '#333',
-  lineWidth: 1 
+  strokeWidth: 1,
+  top: 0,
+  left: 0,
+  transparentCorners: false
 }
 
 const shapeConfigMap = {
   circle: {
-    style: commonStyle,
-    shape: {
-      cx: 0,
-      cy: 0,
-      r: 35
-    },
-    position: [0, 0],
-    draggable: true
+    ...commonShapeConfig,
+    radius: 20
+  },
+  rect: {
+    ...commonShapeConfig,
+    width: 40,
+    height: 40
+  },
+  rectRadius: {
+    ...commonShapeConfig,
+    width: 40,
+    height: 40,
+    rx: 4,
+    ry: 4
   }
 }
 
@@ -43,56 +54,53 @@ class CommonShape extends ICommonShape {
   active() {
     this.selected = true
 
-    this.attr('style', {
-      shadowColor:'yellow',
-      shadowBlur:3
-    })
+    // this.attr('style', {
+    //   shadowColor:'yellow',
+    //   shadowBlur:3
+    // })
   }
 }
 
 export class ShapeManage {
-  getShape(nodeType: NodeType, config: zrender.PathProps) {
-    const { x, y, style, shape } = config
+  getShape(nodeType: NodeType, config: TFabricObjectProps, canvas) {
+    // const { left, top } = config
 
     const shapeConfig = shapeConfigMap[nodeType]
 
     const shapeNode = shapeMap[nodeType] 
-    applyMixins(shapeNode, [CommonShape])
+    // applyMixins(shapeNode, [CommonShape])
 
     const shapeInstance = new shapeNode(shapeConfig)
+    // const shapeInstance = new Circle(shapeConfig)
 
-    // 设置初始位置
-    if (x && y) {
-      shapeInstance.setPosition([x, y])
-    }
-
-    if (style) {
-      shapeConfig.style = merge(shapeConfig.style, style)
-    }
-
-    if (shape) {
-      shapeConfig.shape = merge(shapeConfig.shape, shape)
-    }
+    // 设置属性
+    Object.keys(config).forEach((key: keyof TFabricObjectProps) => {
+      shapeInstance.set(key, config[key])
+    })
   
-    shapeInstance.on('click', () => {
-      shapeInstance.__zr.trigger('selectNode', { node: shapeInstance })
-    })
+    shapeInstance.setCoords()
+    // canvas.requestRenderAll()
+  
+    // shapeInstance.on('selected', (e) => {
+    //   // shapeInstance.__zr.trigger('selectNode', { node: shapeInstance })
+    //   // debugger
+    // })
 
-    shapeInstance.on('dragstart', () => {
-      console.log('dragstart', shapeInstance)
-    })
+    // shapeInstance.on('dragstart', () => {
+    //   console.log('dragstart', shapeInstance)
+    // })
 
-    shapeInstance.on('drag', () => {
-      console.log('drag', shapeInstance)
-    }) 
+    // shapeInstance.on('drag', () => {
+    //   console.log('drag', shapeInstance)
+    // }) 
 
-    shapeInstance.on('dragend', () => {
-      console.log('dragend', shapeInstance)
-    })
+    // shapeInstance.on('dragend', () => {
+    //   console.log('dragend', shapeInstance)
+    // })
 
-    shapeInstance.on('dblclick', () => {
-      console.log('dblclick', shapeInstance)
-    })
+    // shapeInstance.on('dblclick', () => {
+    //   console.log('dblclick', shapeInstance)
+    // })
 
     return shapeInstance
   }

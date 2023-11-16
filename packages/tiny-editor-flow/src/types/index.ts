@@ -1,10 +1,10 @@
-import * as zrender from 'zrender'
+import type { TFabricObjectProps } from 'fabric'
 
 export interface TinyFlowEditorOptions {
   /**
    * DOM 容器
    */
-  container: HTMLElement  
+  containerId: string  
   /**
    * 画布宽度
    */
@@ -21,15 +21,11 @@ export interface TinyFlowEditorOptions {
    * 禁止拖动画布
    */
   disableMoveGraph?: boolean
-  /**
-   * 画布大小与容器大小之比(传递给zrender的devicePixelRatio)
-   */
-  devicePixelRatio?: number
 }
 
 export type NodeType = 'circle'
 
 export interface AddNodeType {
   nodeType: NodeType
-  shapeConfig: zrender.PathProps
+  shapeConfig: TFabricObjectProps
 }

@@ -6,9 +6,9 @@ const editor = ref<TinyFlowEditor>()
 
 onMounted(() => {
   editor.value = new TinyFlowEditor({
-    container: document.getElementById('tiny-editor') as HTMLElement,
-    width: 500,
-    height: 500
+    containerId: 'tiny-editor',
+    width: 1000,
+    height: 800
   })
 })
 
@@ -27,7 +27,7 @@ const drop = (event: DragEvent) => {
 
   if (editor.value) {
     console.log('editor', editor.value)
-    editor.value.addNode({ nodeType, shapeConfig: { x: offsetX, y: offsetY }})
+    editor.value.addNode({ nodeType, shapeConfig: { x: offsetX, y: offsetY } })
   }
 }
 
@@ -38,11 +38,13 @@ const dragOver = (event: DragEvent) => {
 </script>
 
 <template>
-  <div id="tiny-editor" @drop="drop" @dragstart="dragStart" @dragover="dragOver"></div>
+  <div class="tiny-editor-container" @drop="drop" @dragstart="dragStart" @dragover="dragOver">
+    <canvas id="tiny-editor"></canvas>
+  </div>
 </template>
 
 <style scoped>
-#tiny-editor {
+.tiny-editor-container {
   height: 100%;
   position: absolute;
   width: calc(100% - 445px);
