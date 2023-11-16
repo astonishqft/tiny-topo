@@ -1,11 +1,10 @@
-import { Circle, CircleProps } from 'fabric'
+import Konva from 'konva'
 
-
-export default class extends Circle {
-  private config: Partial<CircleProps>
+export default class extends Konva.Circle {
+  private config: Konva.CircleConfig
   private anchors: any[]
 
-  constructor(config: Partial<CircleProps>) {
+  constructor(config: Konva.CircleConfig) {
     super(config)
     this.config = config
     this.anchors = [1, 2, 3, 4, 5]

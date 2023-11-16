@@ -1,4 +1,4 @@
-import type { TFabricObjectProps } from 'fabric'
+import Konva from 'konva'
 
 export interface TinyFlowEditorOptions {
   /**
@@ -27,5 +27,5 @@ export type NodeType = 'circle'
 
 export interface AddNodeType {
   nodeType: NodeType
-  shapeConfig: TFabricObjectProps
+  shapeConfig: Konva.NodeConfig
 }

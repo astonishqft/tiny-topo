@@ -39,7 +39,7 @@ const dragOver = (event: DragEvent) => {
 
 <template>
   <div class="tiny-editor-container" @drop="drop" @dragstart="dragStart" @dragover="dragOver">
-    <canvas id="tiny-editor"></canvas>
+    <div id="tiny-editor"></div>
   </div>
 </template>
 

@@ -1,29 +1,31 @@
+import Konva from 'konva'
 import Circle from './circle'
 import Rect from './rect'
-import RectRadius from './rectRadius'
+
 import type { NodeType } from '../types'
 import { applyMixins } from './applyMixins'
-import type { TFabricObjectProps } from 'fabric'
 
 const shapeMap = {
   circle: Circle,
   rect: Rect,
-  rectRadius: RectRadius
+  rectRadius: Rect
 }
 
 const commonShapeConfig = {
   fill: '#fff',
   stroke: '#333',
   strokeWidth: 1,
-  top: 0,
-  left: 0,
-  transparentCorners: false
+  x: 0,
+  y: 0,
+  draggable: true
 }
 
 const shapeConfigMap = {
   circle: {
     ...commonShapeConfig,
-    radius: 20
+    radius: 20,
+    x: 200,
+    y: 200
   },
   rect: {
     ...commonShapeConfig,
@@ -34,8 +36,7 @@ const shapeConfigMap = {
     ...commonShapeConfig,
     width: 40,
     height: 40,
-    rx: 4,
-    ry: 4
+    cornerRadius: [4, 4, 4, 4]
   }
 }
 
@@ -62,7 +63,7 @@ class CommonShape extends ICommonShape {
 }
 
 export class ShapeManage {
-  getShape(nodeType: NodeType, config: TFabricObjectProps, canvas) {
+  getShape(nodeType: NodeType, config: Konva.ShapeConfig) {
     // const { left, top } = config
 
     const shapeConfig = shapeConfigMap[nodeType]
@@ -71,15 +72,9 @@ export class ShapeManage {
     // applyMixins(shapeNode, [CommonShape])
 
     const shapeInstance = new shapeNode(shapeConfig)
-    // const shapeInstance = new Circle(shapeConfig)
 
-    // 设置属性
-    Object.keys(config).forEach((key: keyof TFabricObjectProps) => {
-      shapeInstance.set(key, config[key])
-    })
+    shapeInstance.setAttrs(config)
   
-    shapeInstance.setCoords()
-    // canvas.requestRenderAll()
   
     // shapeInstance.on('selected', (e) => {
     //   // shapeInstance.__zr.trigger('selectNode', { node: shapeInstance })

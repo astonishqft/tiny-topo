@@ -1,12 +1,12 @@
-import { Rect, RectProps } from 'fabric'
+import Konva from 'konva'
 // import BaseShape from './baseShape'
 // import TinyFlowEditor from '../tinyFlowEditor'
 // import type { IShapeConfig } from '../types'
 
-export default class extends Rect {
-  private config: Partial<RectProps>
+export default class extends Konva.Rect {
+  private config: Konva.RectConfig
 
-  constructor(config: Partial<RectProps>) {
+  constructor(config: Konva.RectConfig) {
     super(config)
     this.config = config
   }

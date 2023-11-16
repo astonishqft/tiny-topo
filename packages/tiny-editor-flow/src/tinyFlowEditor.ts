@@ -1,13 +1,15 @@
-import { Canvas, FabricObject, Group, ActiveSelection } from 'fabric'
+import Konva from 'konva'
 import { ShapeManage } from './shapes/shapeManage'
 import type { TinyFlowEditorOptions, AddNodeType } from './types'
-import type { TPointerEventInfo, TPointerEvent } from 'fabric'
+// import type { Shape } from 'konva'
 
-class TinyFlowEditor extends Canvas {
-  private nodes: FabricObject[] = []
-  private connectLines: FabricObject[] = []
-  private groups: Group[] = []
+class TinyFlowEditor extends Konva.Stage {
+  private nodes: Konva.Shape[] = []
+  private connectLines: Konva.Shape[] = []
+  private groups: Konva.Group[] = []
   private shapeManage: ShapeManage
+
+  private layer: Konva.Layer = new Konva.Layer()
 
   // 鼠标是否点击，也就是开始拖拽的标记位
   private isDrag = false
@@ -20,11 +22,13 @@ class TinyFlowEditor extends Canvas {
 
   constructor(opts: TinyFlowEditorOptions) {
     const { containerId, width, height } = opts;
-    super(containerId, {
+    super({
+      container: containerId,
       width,
       height
     });
 
+    this.add(this.layer)
 
     this.shapeManage = new ShapeManage()
 
@@ -34,25 +38,19 @@ class TinyFlowEditor extends Canvas {
   addNode({ nodeType, shapeConfig }: AddNodeType) {
     const { x, y } = shapeConfig
     if (x && y) {
-      const node = this.shapeManage.getShape(nodeType, { left: x, top: y }, this)
+      const node = this.shapeManage.getShape(nodeType, { x, y })
      
-      this.add(node)
+      this.layer.add(node)
       this.nodes.push(node)
     }
   }
 
   discardActiveNode() {
-    this.discardActiveObject()
+    
   }
 
   selectNode(node) {
-    console.log('node', node)
-    console.log('this.', this)
-    const sel = new ActiveSelection([node], {
-      canvas: this
-    });
-    this.setActiveObject(sel)
-    this.requestRenderAll()
+    
   }
 
   initEvent() {
@@ -70,23 +68,16 @@ class TinyFlowEditor extends Canvas {
     //   }
     // })
     
-    this.on('mouse:move', (e: TPointerEventInfo<TPointerEvent>) => {
-      if (e.target) {
-        e.target.setCoords()
-      }
+    this.on('mouse:move', (e) => {
+     
     })
 
-    this.on('mouse:down', (e: TPointerEventInfo<TPointerEvent>) => {
+    this.on('mouse:down', (e) => {
       if (e.target) {
-        console.log('mouse:down', e.target)
-        this.startLeft = e.target.left
-        this.startTop = e.target.top
+
         this.isDrag = true
 
 
-        // this.discardActiveNode()
-
-        // this.selectNode(e.target)
       }
     })
   }
