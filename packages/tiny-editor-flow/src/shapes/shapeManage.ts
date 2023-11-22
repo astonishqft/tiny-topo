@@ -1,9 +1,9 @@
 import Konva from 'konva'
 import Circle from './circle'
 import Rect from './rect'
-
-import type { NodeType } from '../types'
+import Anchor from './anchor'
 import { applyMixins } from './applyMixins'
+import type { NodeType, IShape } from '../types'
 
 const shapeMap = {
   circle: Circle,
@@ -24,8 +24,8 @@ const shapeConfigMap = {
   circle: {
     ...commonShapeConfig,
     radius: 20,
-    x: 200,
-    y: 200
+    x: 0,
+    y: 0
   },
   rect: {
     ...commonShapeConfig,
@@ -40,54 +40,50 @@ const shapeConfigMap = {
   }
 }
 
-abstract class ICommonShape {
-  selected: boolean = false
-  abstract active(): void
-  attr(name: string, value: any){}
-}
+class CommonShape {
+  // selected: boolean = false
 
-class CommonShape extends ICommonShape {
-  constructor() {
-    super()
-    this.selected = false
-  }
-
-  active() {
-    this.selected = true
-
-    // this.attr('style', {
-    //   shadowColor:'yellow',
-    //   shadowBlur:3
-    // })
-  }
+  // active(shapeInstance: IShape) {
+  //   this.selected = true
+  //   shapeInstance.setAttr('fill', 'red')
+  // }
 }
 
 export class ShapeManage {
-  getShape(nodeType: NodeType, config: Konva.ShapeConfig) {
-    // const { left, top } = config
-
+  getShape(nodeType: NodeType, config: Konva.ShapeConfig): IShape{
     const shapeConfig = shapeConfigMap[nodeType]
 
     const shapeNode = shapeMap[nodeType] 
-    // applyMixins(shapeNode, [CommonShape])
+    applyMixins(shapeNode, [CommonShape])
 
-    const shapeInstance = new shapeNode(shapeConfig)
+    const shapeInstance: IShape = new shapeNode({ ...shapeConfig, ...config})
 
-    shapeInstance.setAttrs(config)
-  
-  
-    // shapeInstance.on('selected', (e) => {
-    //   // shapeInstance.__zr.trigger('selectNode', { node: shapeInstance })
-    //   // debugger
-    // })
 
-    // shapeInstance.on('dragstart', () => {
-    //   console.log('dragstart', shapeInstance)
-    // })
+    // shapeInstance.setAttrs(config)
 
-    // shapeInstance.on('drag', () => {
-    //   console.log('drag', shapeInstance)
-    // }) 
+    shapeInstance.on('mouseover', () => {
+      shapeInstance.anchor.refresh()
+      shapeInstance.anchor.show()
+    })
+
+    shapeInstance.on('mouseout', () => {
+      shapeInstance.anchor.hide()
+    })
+
+    shapeInstance.on('dragstart', () => {
+      console.log('dragstart', shapeInstance)
+      shapeInstance.anchor.hide()
+    })
+
+    shapeInstance.on('dragmove', () => {
+      // shapeInstance.anchor.show()
+
+    })
+
+    shapeInstance.on('dragend', () => {
+      console.log('dragend', shapeInstance)
+      shapeInstance.anchor.hide()
+    })
 
     // shapeInstance.on('dragend', () => {
     //   console.log('dragend', shapeInstance)

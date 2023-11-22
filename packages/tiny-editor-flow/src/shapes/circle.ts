@@ -1,29 +1,58 @@
 import Konva from 'konva'
+import Anchor from './anchor'
+import type { IAnchors } from '../types'
 
 export default class extends Konva.Circle {
-  private config: Konva.CircleConfig
-  private anchors: any[]
+  config: Konva.CircleConfig
+  anchors: IAnchors
+  anchor: Anchor
 
   constructor(config: Konva.CircleConfig) {
     super(config)
     this.config = config
-    this.anchors = [1, 2, 3, 4, 5]
+    this.anchors = []
+    this.createAnchors()
+    this.anchor = new Anchor(this)
   }
 
   // 创建锚点，提供给连接线连接
   createAnchors() {
+    const radius = this.getAttr('radius')
+    const x = this.getAttr('x')
+    const y = this.getAttr('y')
+
     const top = {
-      x: this.width / 2 + this.left,
-      y: this.top,
+      x: x,
+      y: y - radius,
       node: this,
       type: 'top'
     }
 
     const right = {
-      x: this.width + this.left,
-      y: this.height + this.top,
+      x: x + radius,
+      y: y,
       node: this,
       type: 'right'
     }
+
+    const bottom = {
+      x: x,
+      y: y + radius,
+      node: this,
+      type: 'bottom'
+    }
+
+    const left = {
+      x: x - radius,
+      y: y,
+      node: this,
+      type: 'left'
+    }
+
+    this.anchors = [top, right, bottom, left]
+  }
+
+  active() {
+    this.setAttr('fill', 'red')
   }
 }

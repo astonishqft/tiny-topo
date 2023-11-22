@@ -1,6 +1,6 @@
 import Konva from 'konva'
 import { ShapeManage } from './shapes/shapeManage'
-import type { TinyFlowEditorOptions, AddNodeType } from './types'
+import type { TinyFlowEditorOptions, AddNodeType, IShape } from './types'
 // import type { Shape } from 'konva'
 
 class TinyFlowEditor extends Konva.Stage {
@@ -39,8 +39,13 @@ class TinyFlowEditor extends Konva.Stage {
     const { x, y } = shapeConfig
     if (x && y) {
       const node = this.shapeManage.getShape(nodeType, { x, y })
-     
+
       this.layer.add(node)
+      console.log('add node', node)
+      node.anchor.bars.forEach(bar => {
+        console.log('bar', bar)
+        this.layer.add(bar)
+      });
       this.nodes.push(node)
     }
   }
