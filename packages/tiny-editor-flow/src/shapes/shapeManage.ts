@@ -62,16 +62,17 @@ export class ShapeManage {
     // shapeInstance.setAttrs(config)
 
     shapeInstance.on('mouseover', () => {
-      shapeInstance.anchor.refresh()
       shapeInstance.anchor.show()
+      shapeInstance.setAttr('z', 9999)
     })
 
-    shapeInstance.on('mouseout', () => {
+    shapeInstance.on('mouseout', (e) => {
       shapeInstance.anchor.hide()
+      console.log('mouseout',e)
+      // shapeInstance.setAttr('z', 1)
     })
 
     shapeInstance.on('dragstart', () => {
-      console.log('dragstart', shapeInstance)
       shapeInstance.anchor.hide()
     })
 
@@ -82,6 +83,8 @@ export class ShapeManage {
 
     shapeInstance.on('dragend', () => {
       console.log('dragend', shapeInstance)
+      shapeInstance.anchor.refresh()
+
       shapeInstance.anchor.hide()
     })
 

@@ -21,8 +21,23 @@ class Anchor {
         radius: 3,
         fill: '#fff',
         stroke: 'rgb(0,181,237)',
-        strokeWidth: 1,
-        name: 'anchor'
+        strokeWidth: 1
+      })
+
+      p.on('mouseover',() => {
+        this.show()
+        if (p.parent && p.parent.parent) {
+          const stage = p.parent.parent as Konva.Stage
+          stage.container().style.cursor = 'crosshair'
+        }
+      })
+
+      p.on('mouseout',() => {
+        this.hide()
+        if (p.parent && p.parent.parent) {
+          const stage = p.parent.parent as Konva.Stage
+          stage.container().style.cursor = 'default'
+        }
       })
 
       this.bars.push(p)
