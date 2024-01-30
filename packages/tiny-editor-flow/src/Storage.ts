@@ -1,6 +1,6 @@
 import Shape from './Shape';
 
-class Stage {
+class Storage {
   shapes: Shape[] = []
 
   constructor () {
@@ -19,4 +19,4 @@ class Stage {
   }
 }
 
-export default Stage;
+export default Storage;

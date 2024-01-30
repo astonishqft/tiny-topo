@@ -1,15 +1,15 @@
 import * as zrender from 'zrender';
-import Stage from './Stage';
+import Stage from './Storage';
 import Shape from './Shape';
 import Rect from './shapes/Rect';
 
 class Painter {
   _zr: zrender.ZRenderType;
   _layer: zrender.Group;
-  stage: Stage;
+  storage: Stage;
 
-  constructor(dom: HTMLElement, opts: zrender.ZRenderInitOpt, stage: Stage) {
-    this.stage = stage;
+  constructor(dom: HTMLElement, opts: zrender.ZRenderInitOpt, storage: Stage) {
+    this.storage = storage;
     this._zr = zrender.init(dom, opts);
     this._layer = new zrender.Group();
     this._zr.add(this._layer);
@@ -26,7 +26,7 @@ class Painter {
         throw new Error('Invalid shape type');
     }
 
-    this.stage.add(shape);
+    this.storage.add(shape);
     this._layer.add(shape.getShape());
   }
 }

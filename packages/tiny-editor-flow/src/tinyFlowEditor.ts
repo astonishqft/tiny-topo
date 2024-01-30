@@ -1,6 +1,6 @@
 
 import * as zrender from 'zrender';
-import Stage from './Stage';
+import Stage from './Storage';
 import Painter from './Painter';
 
 class TinyFlowEditor {
