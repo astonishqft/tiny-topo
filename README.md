@@ -11,6 +11,6 @@ $ pnpm install
 2. 运行
 
 ```ssh
-$ cd playground/tiny-editor
+$ cd playground/editor
 $ pnpm run dev
 ```
