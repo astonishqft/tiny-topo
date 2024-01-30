@@ -16,7 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "@qftjs/tiny-editor-core": "workspace:^1.0.0",
-    "konva": "^9.2.3"
+    "zrender": "^5.4.4"
   },
   "devDependencies": {
     "tslib": "^2.6.2"

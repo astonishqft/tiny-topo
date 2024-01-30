@@ -1,15 +1,11 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { TinyFlowEditor } from '@qftjs/tiny-editor-flow'
+import * as tinyFlowEditor from '@qftjs/tiny-editor-flow'
 
-const editor = ref<TinyFlowEditor>()
+const editor = ref<tinyFlowEditor.TinyFlowEditor>()
 
 onMounted(() => {
-  editor.value = new TinyFlowEditor({
-    containerId: 'tiny-editor',
-    width: 1000,
-    height: 800
-  })
+  editor.value = new tinyFlowEditor.TinyFlowEditor(document.getElementById('tiny-editor') as HTMLElement);
 })
 
 const dragStart = (event: DragEvent) => {
@@ -26,8 +22,7 @@ const drop = (event: DragEvent) => {
   const { nodeType } = JSON.parse(data)
 
   if (editor.value) {
-    console.log('editor', editor.value)
-    editor.value.addNode({ nodeType, shapeConfig: { x: offsetX, y: offsetY } })
+    editor.value.createShape(nodeType, offsetX, offsetY )
   }
 }
 
@@ -50,5 +45,9 @@ const dragOver = (event: DragEvent) => {
   width: calc(100% - 445px);
   left: 185px;
   border-right: 1px solid #dadce0;
+}
+#tiny-editor {
+  width: 100%;
+  height: 100%;
 }
 </style>

@@ -38,7 +38,7 @@ const elementList: ElementListType = [
   },
   {
     component: IconRectRadius,
-    nodeType: 'rectRadius'
+    nodeType: 'roundRect'
   },
   {
     component: IconActor,
