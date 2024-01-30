@@ -16,24 +16,24 @@ const defaultShapeConfig = {
   height: 80
 };
 
-export interface ICommonCOnfig {
+export interface IShapeTextConfig {
   textContent: zrender.Text;
   textConfig?: zrender.ElementTextConfig;
-  draggable?: boolean;
 }
 
-const commonConfig: ICommonCOnfig = {
-  textContent: new zrender.Text({
-    style: {
-      text: 'title',
-      fill: '#333',
-      font: '10px Arial'
+const getDefaultTextConfig = (): IShapeTextConfig => {
+  return {
+    textContent: new zrender.Text({
+      style: {
+        text: 'title',
+        fill: '#333',
+        font: '10px Arial'
+      }
+    }),
+    textConfig: {
+      position: 'inside'
     }
-  }),
-  textConfig: {
-    position: 'inside'
-  },
-  draggable: true
+  } 
 }
 
 const shapeConfig = {
@@ -43,4 +43,4 @@ const shapeConfig = {
   } 
 }
 
-export { shapeConfig, commonConfig };
+export { shapeConfig, getDefaultTextConfig };

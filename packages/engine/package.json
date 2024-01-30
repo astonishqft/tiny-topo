@@ -1,7 +1,7 @@
 {
-  "name": "@qftjs/tiny-editor-flow",
+  "name": "@qftjs/tiny-editor-engine",
   "version": "1.0.0",
-  "description": "tiny-editor-flow",
+  "description": "tiny-editor-engine",
   "main": "dist/index.umd.js",
   "module": "dist/index.mjs",
   "typings": "dist/index.d.ts",

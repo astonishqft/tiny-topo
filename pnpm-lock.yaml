@@ -18,24 +18,24 @@ importers:
       vite: 4.5.2
       vite-plugin-dts: 3.7.2_h7hpevnklssrimp2h44vopcfsm
 
-  packages/tiny-editor-core:
+  packages/core:
     specifiers: {}
 
-  packages/tiny-editor-flow:
+  packages/engine:
     specifiers:
       '@qftjs/tiny-editor-core': workspace:^1.0.0
       tslib: ^2.6.2
       zrender: ^5.4.4
     dependencies:
-      '@qftjs/tiny-editor-core': link:../tiny-editor-core
+      '@qftjs/tiny-editor-core': link:../core
       zrender: 5.4.4
     devDependencies:
       tslib: 2.6.2
 
-  playground/tiny-editor:
+  playground/editor:
     specifiers:
       '@qftjs/tiny-editor-core': workspace:^1.0.0
-      '@qftjs/tiny-editor-flow': workspace:^1.0.0
+      '@qftjs/tiny-editor-engine': workspace:^1.0.0
       '@rushstack/eslint-patch': ^1.3.3
       '@tsconfig/node18': ^18.2.2
       '@types/node': ^18.17.17
@@ -55,8 +55,8 @@ importers:
       vue-router: ^4.2.4
       vue-tsc: ^1.8.11
     dependencies:
-      '@qftjs/tiny-editor-core': link:../../packages/tiny-editor-core
-      '@qftjs/tiny-editor-flow': link:../../packages/tiny-editor-flow
+      '@qftjs/tiny-editor-core': link:../../packages/core
+      '@qftjs/tiny-editor-engine': link:../../packages/engine
       pinia: 2.1.7_4vjt2tg2uzcgy2h232otpwrvwe
       vue: 3.4.15_typescript@5.2.2
       vue-router: 4.2.5_vue@3.4.15

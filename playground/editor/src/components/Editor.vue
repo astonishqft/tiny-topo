@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import * as tinyFlowEditor from '@qftjs/tiny-editor-flow'
+import * as tinyFlowEditor from '@qftjs/tiny-editor-engine'
 
 const editor = ref<tinyFlowEditor.TinyFlowEditor>()
 
