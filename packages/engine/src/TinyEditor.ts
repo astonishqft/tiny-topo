@@ -3,7 +3,7 @@ import * as zrender from 'zrender';
 import Stage from './Storage';
 import Painter from './Painter';
 
-class TinyFlowEditor {
+class TinyEditor {
   painter: Painter;
   stage: Stage;
 
@@ -17,4 +17,4 @@ class TinyFlowEditor {
   }
 }
 
-export default TinyFlowEditor;
+export default TinyEditor;

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import * as tinyFlowEditor from '@qftjs/tiny-editor-engine'
+import * as tinyEditor from '@qftjs/tiny-editor-engine'
 
-const editor = ref<tinyFlowEditor.TinyFlowEditor>()
+const editor = ref<tinyEditor.TinyEditor>()
 
 onMounted(() => {
-  editor.value = new tinyFlowEditor.TinyFlowEditor(document.getElementById('tiny-editor') as HTMLElement);
+  editor.value = new tinyEditor.TinyEditor(document.getElementById('tiny-editor') as HTMLElement);
 })
 
 const dragStart = (event: DragEvent) => {
