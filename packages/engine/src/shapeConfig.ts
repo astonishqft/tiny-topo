@@ -38,8 +38,8 @@ const getDefaultTextConfig = (): IShapeTextConfig => {
 
 const shapeConfig = {
   rect: {
-    style: defaultStyleConfig,
-    shape: defaultShapeConfig
+    defaultStyleConfig,
+    defaultShapeConfig
   } 
 }
 
