@@ -1,4 +1,4 @@
-import Shape from './Shape';
+import Shape from './Shape'
 
 class Storage {
   shapes: Shape[] = []
@@ -19,4 +19,4 @@ class Storage {
   }
 }
 
-export default Storage;
+export default Storage

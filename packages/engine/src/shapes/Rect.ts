@@ -1,15 +1,15 @@
-import * as zrender from 'zrender';
-import Shape from '../Shape';
-import { shapeConfig, getDefaultTextConfig } from '../shapeConfig';
+import * as zrender from 'zrender'
+import Shape from '../Shape'
+import { shapeConfig, getDefaultTextConfig } from '../shapeConfig'
 
 class Rect extends Shape {
   constructor(x: number, y: number) {
-    super(x, y);
+    super(x, y)
   }
 
   getShape(): zrender.Displayable {
-    const { defaultStyleConfig, defaultShapeConfig} = zrender.util.clone(shapeConfig['rect']);
-    const textConfig = getDefaultTextConfig();
+    const { defaultStyleConfig, defaultShapeConfig} = zrender.util.clone(shapeConfig['rect'])
+    const textConfig = getDefaultTextConfig()
     this.shapeInstance = new zrender.Rect({
       shape: {
         ...defaultShapeConfig,
@@ -19,10 +19,10 @@ class Rect extends Shape {
       style: defaultStyleConfig,
       ...textConfig, 
       draggable: true
-    });
+    })
 
-    return this.shapeInstance;
+    return this.shapeInstance
   }
 }
 
-export default Rect;
+export default Rect

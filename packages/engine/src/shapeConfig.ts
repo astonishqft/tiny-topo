@@ -1,4 +1,4 @@
-import * as zrender from 'zrender';
+import * as zrender from 'zrender'
 
 const defaultStyleConfig = {
   fill: '#fff',
@@ -7,14 +7,14 @@ const defaultStyleConfig = {
   fontWeight: 'normal',
   fontSize: 12,
   opacity: 1
-};
+}
 
 const defaultShapeConfig = {
   x: 0,
   y: 0,
   width: 80,
   height: 80
-};
+}
 
 export interface IShapeTextConfig {
   textContent: zrender.Text;
@@ -33,7 +33,7 @@ const getDefaultTextConfig = (): IShapeTextConfig => {
     textConfig: {
       position: 'inside'
     }
-  } 
+  }
 }
 
 const shapeConfig = {
@@ -43,4 +43,4 @@ const shapeConfig = {
   } 
 }
 
-export { shapeConfig, getDefaultTextConfig };
+export { shapeConfig, getDefaultTextConfig }
