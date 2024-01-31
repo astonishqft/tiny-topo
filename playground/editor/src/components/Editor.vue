@@ -8,14 +8,10 @@ onMounted(() => {
   editor.value = new tinyEditor.TinyEditor(document.getElementById('tiny-editor') as HTMLElement);
 })
 
-const dragStart = (event: DragEvent) => {
-  event.preventDefault()
-}
-
 const drop = (event: DragEvent) => {
   // 阻止默认行为（会作为某些元素的链接打开）
   event.preventDefault()
-  console.log('event', event)
+
   const { offsetX, offsetY } = event
   const data = event.dataTransfer!.getData('addNode')
 
@@ -33,7 +29,7 @@ const dragOver = (event: DragEvent) => {
 </script>
 
 <template>
-  <div class="tiny-editor-container" @drop="drop" @dragstart="dragStart" @dragover="dragOver">
+  <div class="tiny-editor-container" @drop="drop" @dragover="dragOver">
     <div id="tiny-editor"></div>
   </div>
 </template>
