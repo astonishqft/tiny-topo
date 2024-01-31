@@ -1,15 +1,15 @@
 
 import * as zrender from 'zrender'
-import Stage from './Storage'
+import Storage from './Storage'
 import Painter from './Painter'
 
 class TinyEditor {
   painter: Painter
-  stage: Stage
+  storage: Storage
 
   constructor(dom: HTMLElement, opts: zrender.ZRenderInitOpt = {}) {
-    this.stage = new Stage()
-    this.painter = new Painter(dom, opts, this.stage)
+    this.storage = new Storage()
+    this.painter = new Painter(dom, opts, this.storage)
   }
 
   createShape(type: string, x: number, y: number) {

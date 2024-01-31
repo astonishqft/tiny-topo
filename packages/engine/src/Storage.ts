@@ -4,7 +4,7 @@ class Storage {
   shapes: Shape[] = []
 
   constructor () {
-
+    console.log('Storage')
   }
 
   add(...shapes: Shape[]) {

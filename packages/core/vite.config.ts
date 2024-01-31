@@ -10,7 +10,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, './src/index.ts'), // TS库入口文件
-      name: 'tiny-topo-core', // 挂载到全局的变量名，CDN导入的时候可以直接使用Counter变量
+      name: 'tiny-editor-core', // 挂载到全局的变量名，CDN导入的时候可以直接使用Counter变量
       fileName: 'index' // 输出的文件名
     },
     rollupOptions: {
@@ -19,7 +19,7 @@ export default defineConfig({
       output: {
         // 在 UMD 构建模式下,全局模式下为这些外部化的依赖提供一个全局变量
         globals: {
-          tinyTopoCore: 'tiny-topo-core'
+          tinyEditorCore: 'tiny-editor-core'
         }
       }
     }

@@ -1,14 +1,14 @@
 import * as zrender from 'zrender'
-import Stage from './Storage'
+import Storage from './Storage'
 import Shape from './Shape'
 import Rect from './shapes/Rect'
 
 class Painter {
   _zr: zrender.ZRenderType
   _layer: zrender.Group
-  storage: Stage
+  storage: Storage
 
-  constructor(dom: HTMLElement, opts: zrender.ZRenderInitOpt, storage: Stage) {
+  constructor(dom: HTMLElement, opts: zrender.ZRenderInitOpt, storage: Storage) {
     this.storage = storage
     this._zr = zrender.init(dom, opts)
     this._layer = new zrender.Group()

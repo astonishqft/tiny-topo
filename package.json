@@ -1,22 +1,22 @@
 {
-  "name": "tiny-topo",
+  "name": "tiny-editor",
   "private": true,
   "version": "1.0.0",
-  "description": "tiny topo",
+  "description": "a flow chart editor",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/astonishqft/tiny-topo.git"
+    "url": "git+https://github.com/astonishqft/tiny-editor.git"
   },
   "author": "qi.futao",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/astonishqft/tiny-topo/issues"
+    "url": "https://github.com/astonishqft/tiny-editor/issues"
   },
-  "homepage": "https://github.com/astonishqft/tiny-topo#readme",
+  "homepage": "https://github.com/astonishqft/tiny-editor#readme",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.24.0",
     "@typescript-eslint/parser": "^5.24.0",
