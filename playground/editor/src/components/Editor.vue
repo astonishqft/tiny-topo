@@ -5,7 +5,7 @@ import * as tinyEditor from '@qftjs/tiny-editor-engine'
 const editor = ref<tinyEditor.TinyEditor>()
 
 onMounted(() => {
-  editor.value = new tinyEditor.TinyEditor(document.getElementById('tiny-editor') as HTMLElement);
+  editor.value = new tinyEditor.TinyEditor(document.getElementById('tiny-editor') as HTMLElement)
 })
 
 const drop = (event: DragEvent) => {
@@ -18,7 +18,7 @@ const drop = (event: DragEvent) => {
   const { nodeType } = JSON.parse(data)
 
   if (editor.value) {
-    editor.value.createShape(nodeType, offsetX, offsetY )
+    editor.value.createShape(nodeType, offsetX, offsetY)
   }
 }
 
