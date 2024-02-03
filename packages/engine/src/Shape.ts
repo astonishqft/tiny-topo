@@ -3,7 +3,7 @@ import * as zrender from 'zrender'
 abstract class Shape {
   protected x: number
   protected y: number
-  protected shapeInstance?: zrender.Displayable
+  shapeInstance?: zrender.Displayable
   id: number
 
   constructor(x: number, y: number) {
