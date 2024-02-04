@@ -11,7 +11,7 @@ const getDefaultTextConfig = (): IShapeTextConfig => {
       style: {
         text: 'title',
         fill: '#333',
-        font: '10px Arial'
+        font: '14px Arial'
       }
     }),
     textConfig: {
