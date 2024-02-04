@@ -8,15 +8,15 @@ class Rect extends Shape {
   }
 
   getShape(): zrender.Displayable {
-    const { defaultStyleConfig, defaultShapeConfig} = zrender.util.clone(shapeConfig['rect'])
+    const { style, shape} = zrender.util.clone(shapeConfig['rect'])
     const textConfig = getDefaultTextConfig()
     this.shapeInstance = new zrender.Rect({
       shape: {
-        ...defaultShapeConfig,
-        x: this.x - defaultShapeConfig.width / 2,
-        y: this.y - defaultShapeConfig.height / 2
+        ...shape,
+        x: this.x - shape.width / 2,
+        y: this.y - shape.height / 2
       },
-      style: defaultStyleConfig,
+      style,
       ...textConfig, 
       draggable: true
     })
