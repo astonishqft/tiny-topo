@@ -4,13 +4,13 @@ import { shapeConfig, getDefaultTextConfig } from '../shapeConfig'
 import Anchor from '../Anchor'
 import Handler from '../Handler'
 
-class Rect extends Shape {
+class RoundRect extends Shape {
   constructor(x: number, y: number) {
     super(x, y)
   }
 
   getShape(): zrender.Displayable {
-    const { style, shape} = zrender.util.clone(shapeConfig['rect'])
+    const { style, shape} = zrender.util.clone(shapeConfig['roundRect'])
     const textConfig = getDefaultTextConfig()
     this.shapeInstance = new zrender.Rect({
       shape: {
@@ -42,4 +42,4 @@ class Rect extends Shape {
   }
 }
 
-export default Rect
+export default RoundRect
