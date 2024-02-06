@@ -38,7 +38,7 @@ class Anchor {
         z: 2000
       })
 
-      point.mark = 'mark'
+      point.mark = 'anchor'
       point.node = this.shape
       point.anchor = anchor
 
