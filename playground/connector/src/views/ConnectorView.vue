@@ -308,8 +308,8 @@ onMounted(() => {
     }
   })
 
-  // zr.add(connectLine)
-  // zr.add(arrow)
+  zr.add(connectLine)
+  zr.add(arrow)
   zr.add(rectA)
   zr.add(rectB)
 })
