@@ -1,10 +1,13 @@
 import Shape from './Shape'
+import Painter from './Painter'
 
 class Handler {
   shape: Shape
+  painter: Painter
 
   constructor(shape: Shape) {
     this.shape = shape
+    this.painter = this.shape.painter!
     this.initEvent()
   }
 

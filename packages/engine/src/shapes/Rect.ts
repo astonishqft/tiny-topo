@@ -28,18 +28,6 @@ class Rect extends Shape {
     this.handler = new Handler(this)
     return this.shapeInstance
   }
-
-  createAnchors() {
-    const boundingBox = this.getBoundingRect()
-
-    // 创建四个锚点
-    return [
-      { x: boundingBox.x + boundingBox.width / 2, y: boundingBox.y, index: 1 },
-      { x: boundingBox.x + boundingBox.width, y: boundingBox.y + boundingBox.height / 2, index: 2 },
-      { x: boundingBox.x + boundingBox.width / 2, y: boundingBox.y + boundingBox.height, index: 3 },
-      { x: boundingBox.x, y: boundingBox.y + boundingBox.height / 2, index: 4 }
-    ]
-  }
 }
 
 export default Rect
