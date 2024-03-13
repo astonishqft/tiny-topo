@@ -1,7 +1,7 @@
 import * as zrender from 'zrender'
 import Shape, { IAnchor, IAnchors } from './Shape'
 
-interface IExtraAnchor {
+export interface IExtraAnchor {
   mark?: string
   node?: Shape
   anchor?: IAnchor
@@ -77,15 +77,11 @@ class Anchor {
     })
   }
 
-  getAnchorByIndex(index: number) {
-    return this.anchors.filter(item => item.index == index)[0]
-  }
-
   refresh() {
     this.anchors = this.shape.createAnchors()
 
     this.points.forEach((point: IAnchorPoint) => {
-      const freshPoint = this.getAnchorByIndex((point.anchor as IAnchor).index)
+      const freshPoint = this.shape.getAnchorByIndex((point.anchor as IAnchor).index)
 
       point.attr({
         shape: {

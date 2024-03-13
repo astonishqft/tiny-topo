@@ -3,3 +3,4 @@ node_modules
 dist
 docs
 .pnpm-debug.log
+.vscode

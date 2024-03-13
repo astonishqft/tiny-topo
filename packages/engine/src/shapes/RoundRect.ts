@@ -1,12 +1,14 @@
 import * as zrender from 'zrender'
-import Shape from '../Shape'
+import Shape, { type ShapeInitOpts } from '../Shape'
 import { shapeConfig, getDefaultTextConfig } from '../shapeConfig'
 import Anchor from '../Anchor'
 import Handler from '../Handler'
 
 class RoundRect extends Shape {
-  constructor(x: number, y: number) {
+  constructor({ position, painter }: ShapeInitOpts) {
+    const {x, y} = position
     super(x, y)
+    this.painter = painter
   }
 
   getShape(): zrender.Displayable {
@@ -27,18 +29,6 @@ class RoundRect extends Shape {
     this.anchor = new Anchor(this)
     this.handler = new Handler(this)
     return this.shapeInstance
-  }
-
-  createAnchors() {
-    const boundingBox = this.getBoundingRect()
-
-    // 创建四个锚点
-    return [
-      { x: boundingBox.x + boundingBox.width / 2, y: boundingBox.y, index: 1 },
-      { x: boundingBox.x + boundingBox.width, y: boundingBox.y + boundingBox.height / 2, index: 2 },
-      { x: boundingBox.x + boundingBox.width / 2, y: boundingBox.y + boundingBox.height, index: 3 },
-      { x: boundingBox.x, y: boundingBox.y + boundingBox.height / 2, index: 4 }
-    ]
   }
 }
 

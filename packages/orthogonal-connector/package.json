@@ -1,7 +1,7 @@
 {
-  "name": "@qftjs/tiny-editor-engine",
+  "name": "@qftjs/orthogonal-connector",
   "version": "1.0.0",
-  "description": "tiny-editor-engine",
+  "description": "Orthogonal connector",
   "main": "dist/index.umd.js",
   "module": "dist/index.mjs",
   "typings": "dist/index.d.ts",
@@ -10,15 +10,11 @@
   ],
   "scripts": {
     "build": "vite build",
-    "dev": "vite build --watch"
+    "dev": "vite build --watch",
+    "lint": "eslint src/**/*.ts"
   },
   "author": "qi.futao",
   "license": "ISC",
-  "dependencies": {
-    "@qftjs/orthogonal-connector": "workspace:^1.0.0",
-    "@qftjs/tiny-editor-core": "workspace:^1.0.0",
-    "zrender": "^5.4.4"
-  },
   "devDependencies": {
     "tslib": "^2.6.2"
   }

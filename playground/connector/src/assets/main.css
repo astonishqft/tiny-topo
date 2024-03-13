@@ -1,0 +1,13 @@
+@import './base.css';
+
+@import './iconfont/iconfont.css';
+
+#app, body {
+  height: 100%;
+}
+
+#app {
+  height: 100vh;
+  width: 100%;
+}
+

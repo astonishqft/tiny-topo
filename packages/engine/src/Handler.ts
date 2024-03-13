@@ -1,10 +1,13 @@
 import Shape from './Shape'
+import Painter from './Painter'
 
 class Handler {
   shape: Shape
+  painter: Painter
 
   constructor(shape: Shape) {
     this.shape = shape
+    this.painter = this.shape.painter!
     this.initEvent()
   }
 
@@ -12,7 +15,7 @@ class Handler {
     const shapeInstance = this.shape.shapeInstance
     
     shapeInstance?.on('drag',() => {
-      // this.shape && this.shape.anchor?.hide()
+      this.refreshConnections()
     })
 
     shapeInstance?.on('dragstart',() => {
@@ -20,7 +23,6 @@ class Handler {
     })
 
     shapeInstance?.on('dragend',() => {
-      console.log('dragend')
       this.shape && this.shape.anchor?.refresh()
     })
 
@@ -33,8 +35,14 @@ class Handler {
     })
 
     shapeInstance?.on('mouseout',() => {
-  
+
     })
+  }
+
+  refreshConnections() {
+    // 注意拖动节点后，在更新连线位置之前需要先更新锚点的位置
+    this.shape && this.shape.anchor?.refresh()
+    this.painter._zr.trigger('refreshConnections', { node: this.shape })
   }
 }
 
