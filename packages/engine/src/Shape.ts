@@ -55,6 +55,10 @@ abstract class Shape {
   getAnchorByIndex(index: number) {
     return this.anchor!.anchors.filter(item => item.index == index)[0]
   }
+
+  unActive() {
+    
+  }
 }
 
 export default Shape

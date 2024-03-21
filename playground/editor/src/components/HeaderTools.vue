@@ -1,9 +1,16 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+import { ElSelect } from 'element-plus'
+import { useEditorStore } from '@/stores/editor'
+
 interface ToolConfig {
   name: string
   icon: string
   desc: string
 }
+
+const editorStore = useEditorStore()
+const currentLineType = ref(editorStore.lineType)
 
 const toolsConfig: Array<ToolConfig> = [
   {
@@ -62,6 +69,25 @@ const toolsConfig: Array<ToolConfig> = [
     desc: '框选'
   }
 ]
+
+const lineTypes = [
+  {
+    value: 'ortogonalLine',
+    label: '折线'
+  },
+  {
+    value: 'line',
+    label: '直线'
+  },
+  {
+    value: 'bezierCurve',
+    label: '曲线'
+  }
+]
+
+const changeLineType = (value: string) => {
+  editorStore.setLineType(value)
+}
 </script>
 
 <template>
@@ -73,6 +99,19 @@ const toolsConfig: Array<ToolConfig> = [
       :key="tool.name"
       :title="tool.desc"
     ></span>
+    <el-select
+      v-model="currentLineType"
+      :size="'small'"
+      @change="changeLineType"
+      style="width: 60px"
+    >
+      <el-option
+        v-for="item in lineTypes"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      />
+    </el-select>
   </div>
 </template>
 

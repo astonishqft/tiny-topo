@@ -1,11 +1,20 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import * as tinyEditor from '@qftjs/tiny-editor-engine'
+import { useEditorStore } from '@/stores/editor'
 
+const editorStore = useEditorStore()
 const editor = ref<tinyEditor.TinyEditor>()
 
 onMounted(() => {
   editor.value = new tinyEditor.TinyEditor(document.getElementById('tiny-editor') as HTMLElement)
+
+  watch(
+    () => editorStore.lineType,
+    (newValue) => {
+      editor.value?.setLineType(newValue)
+    }
+  )
 })
 
 const drop = (event: DragEvent) => {
@@ -36,7 +45,7 @@ const dragOver = (event: DragEvent) => {
 
 <style scoped>
 .tiny-editor-container {
-  height: 100%;
+  height: calc(100% - 40px);
   position: absolute;
   width: calc(100% - 445px);
   left: 185px;

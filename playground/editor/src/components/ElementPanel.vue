@@ -173,7 +173,7 @@ li {
   position: absolute;
   left: 0;
   width: 185px;
-  height: 100%;
+  height: calc(100% - 40px);
   border-right: 1px solid #dadce0;
   .element-category {
     border-bottom: 1px solid #e5e5e5;

@@ -14,6 +14,7 @@ class Painter {
   isCreatingConnection: boolean = false // 是否正在创建连线
   selectedAnchor: zrender.Element | null = null // 被选中的锚点
   activeLink: Link | null = null // 当前激活的连接线
+  lineType: string = 'ortogonalLine'
 
   constructor(dom: HTMLElement, opts: zrender.ZRenderInitOpt, storage: Storage) {
     this.storage = storage
@@ -49,6 +50,10 @@ class Painter {
     shape.anchor && shape.anchor.points.forEach(p => this._layer.add(p))
   }
 
+  setLineType(type: string) {
+    this.lineType = type
+  }
+
   removeConnection(connection: Link) {
     this._layer.remove(connection)
     this.storage.removeConnection(connection)
@@ -57,6 +62,23 @@ class Painter {
   addConnection(connection: Link) {
     this._layer.add(connection)
     this.storage.addConnection(connection)
+  }
+
+  unActive() {
+    this.unActiveConnections()
+    this.unActiveShapes()
+  }
+
+  unActiveConnections() {
+    this.storage.getAllConnections().forEach((connection: Link) => {
+      connection.unActive()
+    })
+  }
+
+  unActiveShapes() {
+    this.storage.getAllShapes().forEach((shape: Shape) => {
+      shape.unActive()
+    })
   }
 
   initEvent() {
@@ -68,9 +90,14 @@ class Painter {
         this.isCreatingConnection = true
 
         // 创建连线
-        this.activeLink = new Link({ fromAnchor: target.anchor, painter: this, lineType: 'ortogonalLine' })
+        this.activeLink = new Link({ fromAnchor: target.anchor, painter: this, lineType: this.lineType })
         this.activeLink.setFromNode(target.node!)
         this.addConnection(this.activeLink)
+      }
+
+      if (!e.target) {
+        // 如果什么都没选中的话
+        this.unActive()
       }
     })
 
