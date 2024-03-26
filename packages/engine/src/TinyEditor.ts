@@ -15,10 +15,6 @@ class TinyEditor {
   createShape(type: string, x: number, y: number) {
     this.painter.createShape(type, x, y)
   }
-
-  setLineType(type: string) {
-    this.painter.setLineType(type)
-  }
 }
 
 export default TinyEditor
