@@ -12,7 +12,7 @@ onMounted(() => {
   watch(
     () => editorStore.lineType,
     (newValue) => {
-      editor.value?.setLineType(newValue)
+      editor.value?.painter.setLineType(newValue)
     }
   )
 })
