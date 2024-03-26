@@ -182,7 +182,10 @@ class Link extends zrender.Group {
       this.controlLine2!.show()
     }
 
-    this.setLineStroke('#e85827')
+    this.link?.setStyle({
+      shadowColor: '#e85827',
+      shadowBlur: 4
+    })
   }
 
   unActive() {
@@ -193,7 +196,10 @@ class Link extends zrender.Group {
       this.controlLine2!.hide() 
     }
 
-    this.setLineStroke('#000')
+    this.link?.setStyle({
+      shadowColor: 'none',
+      shadowBlur: undefined
+    })
   }
 
   setLineStroke(color: string) {
