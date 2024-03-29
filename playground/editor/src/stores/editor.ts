@@ -3,9 +3,9 @@ import { defineStore } from 'pinia'
 
 export const useEditorStore = defineStore('editor', () => {
   const lineType = ref('ortogonalLine')
-  function setLineType(type: string) {
-    lineType.value = type
+  function setShapeLinkType(type: string) {
+    changeShapeLinkType.value = type
   }
 
-  return { lineType, setLineType }
+  return { changeShapeLinkType, setShapeLinkType }
 })
