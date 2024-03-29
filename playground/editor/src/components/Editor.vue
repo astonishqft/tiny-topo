@@ -10,9 +10,9 @@ onMounted(() => {
   editor.value = new tinyEditor.TinyEditor(document.getElementById('tiny-editor') as HTMLElement)
 
   watch(
-    () => editorStore.lineType,
+    () => editorStore.shapeLinkType,
     (newValue) => {
-      editor.value?.painter.setLineType(newValue)
+      editor.value?.painter.changeShapeLinkType(newValue)
     }
   )
 })
