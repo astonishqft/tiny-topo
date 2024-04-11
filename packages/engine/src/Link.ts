@@ -252,6 +252,7 @@ class Link extends zrender.Group {
 
   // 绘制连接线箭头
   renderArrow(preNode: number[]) {
+    if (!preNode) return
     const arrowLength = 12
     const offsetAngle = Math.PI / 8
     const [x1, y1] = preNode
