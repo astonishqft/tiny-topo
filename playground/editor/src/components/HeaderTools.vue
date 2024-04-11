@@ -86,7 +86,7 @@ const lineTypes = [
 ]
 
 const changeLineType = (value: string) => {
-  editorStore.changeShapeLinkType
+  editorStore.changeShapeLinkType(value)
 }
 </script>
 

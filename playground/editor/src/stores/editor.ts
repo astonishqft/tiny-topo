@@ -2,10 +2,10 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useEditorStore = defineStore('editor', () => {
-  const setShapeLinkType = ref('ortogonalLine')
-  function setShapeLinkType(type: string) {
-    changeShapeLinkType.value = type
+  const shapeLinkType = ref('ortogonalLine')
+  function changeShapeLinkType(type: string) {
+    shapeLinkType.value = type
   }
 
-  return { changeShapeLinkType, setShapeLinkType }
+  return { shapeLinkType, changeShapeLinkType }
 })
