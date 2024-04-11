@@ -10,7 +10,7 @@ interface ToolConfig {
 }
 
 const editorStore = useEditorStore()
-const currentLineType = ref(editorStore.lineType)
+const currentLineType = ref(editorStore.shapeLinkType)
 
 const toolsConfig: Array<ToolConfig> = [
   {
@@ -86,7 +86,7 @@ const lineTypes = [
 ]
 
 const changeLineType = (value: string) => {
-  editorStore.setLineType(value)
+  editorStore.changeShapeLinkType(value)
 }
 </script>
 

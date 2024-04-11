@@ -3,6 +3,7 @@ import OrthogonalConnector from '@qftjs/orthogonal-connector'
 import Painter from './Painter'
 import type { IPoint } from './types'
 import Shape, { type IAnchor } from './Shape'
+import type { FontStyle, FontWeight } from 'zrender/lib/core/types'
 
 interface ILinkOpts {
   fromAnchor: IAnchor
@@ -11,6 +12,7 @@ interface ILinkOpts {
 }
 
 class Link extends zrender.Group {
+  nodeType = 'link'
   fromAnchor: IAnchor
   toAnchor: IAnchor | null = null
   lineType: string
@@ -25,8 +27,19 @@ class Link extends zrender.Group {
   controlNode2: zrender.Circle | null = null // 贝塞尔曲线控制点2
   controlLine1: zrender.Line | null = null // 贝塞尔曲线控制线1
   controlLine2: zrender.Line | null = null // 贝塞尔曲线控制线2
-
-  isActive: boolean = false // 当前线是否被选中
+  linkText: zrender.Text | null = null
+  ortogonalLinePoints: number[][] = [] // 正交连线坐标点
+  textPoints: number[] = []
+  selected: boolean = false // 当前线是否被选中
+  strokeLinkColor: string | undefined = '#1e1e1e'
+  linkWidth: number = 1
+  lineDash: number[] = [0, 0]
+  linkStrokeType: string = 'solid'
+  linkFontColor: string | undefined = '#333'
+  linkFontText = ''
+  linkFontSize = 12
+  linkFontWeight: FontWeight | undefined = 'normal'
+  linkFontItalic: FontStyle | undefined = 'normal'
 
   constructor({ fromAnchor, lineType = 'ortogonalLine', painter }: ILinkOpts) {
     super()
@@ -110,6 +123,7 @@ class Link extends zrender.Group {
             cpx1: absX,
             cpy1: absY
           })
+          this.renderText()
         })
 
         this.controlNode2.on('drag', (e: zrender.ElementEvent) => {
@@ -126,6 +140,7 @@ class Link extends zrender.Group {
           })
 
           this.renderArrow([absX, absY])
+          this.renderText()
         })
 
         this.unActive()
@@ -146,18 +161,23 @@ class Link extends zrender.Group {
 
     (this.link as zrender.Element).on('click', () => {
       this.active()
+      this.painter._zr.trigger('selectLink', this)
     });
 
     (this.link as zrender.Element).on('mouseover', () => {
       this.link?.setStyle({
-        lineWidth: 2
+        lineWidth: this.linkWidth + 1
       })
     });
 
     (this.link as zrender.Element).on('mouseout', () => {
       this.link?.setStyle({
-        lineWidth: 1
+        lineWidth: this.linkWidth
       })
+    });
+
+    (this.link as zrender.Element).on('dblclick',() => {
+      this.painter._zr.trigger('dbClickLink', this)
     })
 
     this.arrow = new zrender.Polygon({
@@ -167,14 +187,46 @@ class Link extends zrender.Group {
       z: 40
     })
 
+    this.linkText = new zrender.Text({
+      style: {
+        text: '',
+        fill: '#333',
+        fontSize: 12,
+        fontFamily: 'Arial',
+        verticalAlign: 'middle',
+        backgroundColor: '#fff',
+        align: 'center',
+        padding: [4, 4, 4, 4]
+      },
+      z: 50
+    })
+
+    this.linkText.hide()
+    this.add(this.linkText)
+
     this.add(this.link)
     this.add(this.arrow)
+  }
+
+  changeLineType(lineType: string) {
+    this.remove(this.link!)
+    this.remove(this.arrow!)
+    this.remove(this.linkText!)
+    this.remove(this.controlNode1!)
+    this.remove(this.controlNode2!)
+    this.remove(this.controlLine1!)
+    this.remove(this.controlLine2!)
+    this.lineType = lineType
+    this.createLink()
+    this.refresh()
+    this.active()
+
   }
 
   active() {
     // 在选中某个 Link 之前先取消所有选中的状态
     this.painter.unActive()
-
+    this.selected = true
     if (this.controlLine1 && this.controlLine2 && this.controlNode1 && this.controlNode2) {
       this.controlNode1!.show()
       this.controlNode2!.show()
@@ -182,7 +234,10 @@ class Link extends zrender.Group {
       this.controlLine2!.show()
     }
 
-    this.setLineStroke('#e85827')
+    this.link?.setStyle({
+      shadowColor: '#e85827',
+      shadowBlur: 4
+    })
   }
 
   unActive() {
@@ -193,16 +248,84 @@ class Link extends zrender.Group {
       this.controlLine2!.hide() 
     }
 
-    this.setLineStroke('#000')
+    this.link?.setStyle({
+      shadowColor: 'none',
+      shadowBlur: undefined
+    })
+
+    this.selected = false
   }
 
-  setLineStroke(color: string) {
+  isActive() {
+    return this.selected
+  }
+
+  setLineStroke(color: string | undefined) {
     this.link?.setStyle({
       stroke: color
     })
     this.arrow?.setStyle({
       stroke: color,
       fill: color
+    })
+
+    this.strokeLinkColor = color
+  }
+
+  setLinkWidth(width: number) {
+    this.link?.setStyle({
+      lineWidth: width
+    })
+
+    this.linkWidth = width
+  }
+
+  setLinkStrokeType(type: string) {
+    if (type === 'dashed') {
+      this.lineDash = [5,5] 
+    } else if (type === 'dotted') {
+      this.lineDash = [2, 2]
+    }
+    this.link?.setStyle({
+      lineDash: this.lineDash
+    })
+    this.linkStrokeType = type
+  }
+
+  setLinkFontColor(color: string | undefined) {
+    this.linkText?.setStyle({
+      fill: color
+    })
+    this.linkFontColor = color
+  }
+
+  setLinkText(text: string) {
+    this.linkText?.setStyle({
+      text
+    })
+    this.linkText?.show()
+    this.linkFontText = text
+  }
+
+  setLinkFontSize(size: number) {
+    this.linkText?.setStyle({
+      fontSize: size
+    })
+
+    this.linkFontSize = size
+  }
+
+  setLinkFontWeight() {
+    this.linkFontWeight = this.linkFontWeight === 'normal' ? 'bold' : 'normal'
+    this.linkText?.setStyle({
+      fontWeight: this.linkFontWeight
+    })
+  }
+
+  setLinkFontItalic() {
+    this.linkFontItalic = this.linkFontItalic === 'normal' ? 'italic' : 'normal'
+    this.linkText?.setStyle({
+      fontStyle: this.linkFontItalic
     })
   }
 
@@ -246,6 +369,7 @@ class Link extends zrender.Group {
 
   // 绘制连接线箭头
   renderArrow(preNode: number[]) {
+    if (!preNode) return
     const arrowLength = 12
     const offsetAngle = Math.PI / 8
     const [x1, y1] = preNode
@@ -264,6 +388,70 @@ class Link extends zrender.Group {
     })
   }
 
+  // 计算正交连线的中点坐标
+  calcOrtogonalLineMidPoint() {
+    let accList: number[] = [0]
+    let directionList = []
+    for (let i = 1; i< this.ortogonalLinePoints.length; i++) {
+      const p1 = this.ortogonalLinePoints[i-1]
+      const p2 = this.ortogonalLinePoints[i]
+      const dist = zrender.vector.dist(p1, p2)
+      accList.push(accList[i-1] + dist)
+
+      if (p1[0] === p2[0]) {
+        directionList.push('vertical')
+      } else {
+        directionList.push('horizontal')
+      }
+    }
+
+    const midLength = accList[accList.length - 1] / 2
+
+    let index = 0
+    for (let i = 1; i < accList.length; i++) {
+      if (midLength <= accList[i]) {
+        index = i
+        break
+      }
+    }
+
+    // 判断中点所在的线段的方向
+    const currentDirection = directionList[index - 1]
+    const preNode = this.ortogonalLinePoints[index - 1]
+    const nextNode = this.ortogonalLinePoints[index]
+    const offsetLength = midLength - accList[index - 1]
+
+    if (currentDirection === 'horizontal') {
+      const delta = (nextNode[0] - preNode[0]) > 0 ? 1 : -1
+      return [preNode[0] + offsetLength * delta, preNode[1]]
+    } else {
+      const delta = (nextNode[1] - preNode[1]) > 0 ? 1 : -1
+      return [preNode[0], preNode[1] + offsetLength * delta]
+    }
+  }
+
+  renderText() {
+    if (this.lineType === 'bezierCurve') {
+      const point = this.link && (this.link as zrender.BezierCurve).pointAt(0.5)
+
+      if (point) {
+        this.textPoints = point
+      }
+    } else if (this.lineType === 'ortogonalLine') {
+      this.textPoints = this.calcOrtogonalLineMidPoint()
+    } else {
+      this.textPoints = [
+        (this.fromAnchor!.x + this.toAnchor!.x) / 2,
+        (this.fromAnchor!.y + this.toAnchor!.y) / 2
+      ]
+    }
+
+    this.linkText?.setStyle({
+      x: this.textPoints[0],
+      y: this.textPoints[1]
+    })
+  }
+
   renderLine() {
     this.link && (this.link as zrender.Line).setShape({
       x1: this.fromAnchor!.x,
@@ -273,6 +461,7 @@ class Link extends zrender.Group {
     }) 
 
     this.renderArrow([this.fromAnchor!.x, this.fromAnchor!.y])
+    this.renderText()
   }
 
   renderBezierCurve() {
@@ -315,6 +504,7 @@ class Link extends zrender.Group {
     })
 
     this.renderArrow([cpx2 + this.controlNode2!.x, cpy2 + this.controlNode2!.y])
+    this.renderText()
   }
 
   renderOrtogonalLine() {
@@ -327,17 +517,19 @@ class Link extends zrender.Group {
       globalBounds: { x: 0, y: 0, width: this.canvasWidth, height: this.canvasHeight }
     })
 
-    const points: Array<Array<number>> = []
+    // const points: Array<Array<number>> = []
+    this.ortogonalLinePoints = []
 
     paths.forEach((p: { x: number, y: number }) => {
-      points.push([p.x, p.y])
+      this.ortogonalLinePoints.push([p.x, p.y])
     })
 
     this.link && (this.link as zrender.Polyline).setShape({
-      points
+      points: this.ortogonalLinePoints
     })
 
-    this.renderArrow(points[points.length - 2])
+    this.renderArrow(this.ortogonalLinePoints[this.ortogonalLinePoints.length - 2])
+    this.renderText()
   }
 
   calcControlPoints(anchor: IAnchor): number[] {

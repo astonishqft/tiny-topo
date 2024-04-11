@@ -11,7 +11,8 @@ const getDefaultTextConfig = (): IShapeTextConfig => {
       style: {
         text: 'title',
         fill: '#333',
-        font: '14px Arial'
+        fontSize: 12,
+        fontFamily: 'Arial'
       }
     }),
     textConfig: {
@@ -33,8 +34,8 @@ const shapeConfig = {
     shape: {
       x: 0,
       y: 0,
-      width: 80,
-      height: 80
+      width: 60,
+      height: 60
     }
   },
   circle: {
@@ -47,9 +48,9 @@ const shapeConfig = {
       opacity: 1
     },
     shape: {
-      cx: 40,
-      cy: 40,
-      r: 40
+      cx: 30,
+      cy: 30,
+      r: 30
     } 
   },
   roundRect: {
@@ -64,9 +65,9 @@ const shapeConfig = {
     shape: {
       x: 0,
       y: 0,
-      width: 80,
-      height: 80,
-      r: 6
+      width: 60,
+      height: 60,
+      r: 4
     }
   }
 }

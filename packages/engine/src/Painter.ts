@@ -6,6 +6,7 @@ import Circle from './shapes/Circle'
 import RoundRect from './shapes/RoundRect'
 import Link from './Link'
 import type { IAnchorPoint } from './types'
+import type { BuiltinTextPosition } from 'zrender/lib/core/types'
 
 class Painter {
   _zr: zrender.ZRenderType
@@ -14,7 +15,7 @@ class Painter {
   isCreatingConnection: boolean = false // 是否正在创建连线
   selectedAnchor: zrender.Element | null = null // 被选中的锚点
   activeLink: Link | null = null // 当前激活的连接线
-  lineType: string = 'ortogonalLine'
+  shapeLinkType: string = 'ortogonalLine'
 
   constructor(dom: HTMLElement, opts: zrender.ZRenderInitOpt, storage: Storage) {
     this.storage = storage
@@ -50,8 +51,8 @@ class Painter {
     shape.anchor && shape.anchor.points.forEach(p => this._layer.add(p))
   }
 
-  setLineType(type: string) {
-    this.lineType = type
+  changeShapeLinkType(type: string) {
+    this.shapeLinkType = type
   }
 
   removeConnection(connection: Link) {
@@ -81,6 +82,133 @@ class Painter {
     })
   }
 
+  setShapeBgColor(color: string | null) {
+    this.getSelectedNodes().forEach(node => {
+      node.setFillColor(color)
+    })
+  }
+
+  setShapeStrokeColor(color: string | null) {
+    this.getSelectedNodes().forEach(node => {
+      node.setStrokeColor(color)
+    })
+  }
+
+  setShapeFontSize(size: number) {
+    this.getSelectedNodes().forEach(node => {
+      node.setFontSize(size)
+    })
+  }
+
+  setShapeLineWidth(width: number) {
+    this.getSelectedNodes().forEach(node => {
+      node.setLineWidth(width)
+    })
+  }
+
+  setShapeStrokeType(type: string) {
+    this.getSelectedNodes().forEach(node => {
+      node.setStrokeType(type)
+    })
+  }
+
+  setShapeTextPosition(position: BuiltinTextPosition) {
+    this.getSelectedNodes().forEach(node => {
+      node.setTextPosition(position)
+    })
+  }
+
+  setShapeFontColor(color: string | undefined) {
+    this.getSelectedNodes().forEach(node => {
+      node.setFontColor(color)
+    })
+  }
+
+  setShapeFontWeight() {
+    this.getSelectedNodes().forEach(node => {
+      node.setFontWeight()
+    })
+  }
+
+  setShapeFontItalic() {
+    this.getSelectedNodes().forEach(node => {
+      node.setFontItalic()
+    })
+  }
+
+  setShapeText(text: string) {
+    this.getSelectedNodes().forEach(node => {
+      node.setShapeText(text)
+    })
+  }
+
+  setLinkStrokeColor(color: string | undefined) {
+    this.getSelectedLinks().forEach(link => {
+      link.setLineStroke(color)
+    })
+  }
+
+  setLinkFontColor(color: string | undefined) {
+    this.getSelectedLinks().forEach(link => {
+      link.setLinkFontColor(color)
+    })
+  }
+
+  setLinkWidth(width: number) {
+    this.getSelectedLinks().forEach(link => {
+      link.setLinkWidth(width)
+    })
+  }
+
+  setLinkStrokeType(type: string) {
+    this.getSelectedLinks().forEach(link => {
+      link.setLinkStrokeType(type)
+    })
+  }
+
+  setLinkText(text: string) {
+    this.getSelectedLinks().forEach(link => {
+      if (!text) {
+        link.linkText?.hide()
+        return
+      }
+      link.setLinkText(text)
+    })
+  }
+
+  setLinkFontSize(size: number) {
+    this.getSelectedLinks().forEach(link => {
+      link.setLinkFontSize(size)
+    })
+  }
+
+  setLinkFontWeight() {
+    this.getSelectedLinks().forEach(link => {
+      link.setLinkFontWeight()
+    })
+  }
+
+  setLinkFontItalic() {
+    this.getSelectedLinks().forEach(link => {
+      link.setLinkFontItalic()
+    })
+  }
+
+  setShapeLinkType(type: string) {
+    this.getSelectedLinks().forEach(link => {
+      link.changeLineType(type)
+    }) 
+  }
+
+  // 获取当前所有被选中的节点
+  getSelectedNodes() {
+    return this.storage.getAllShapes().filter((shape: Shape) => shape.isActive())
+  }
+
+  getSelectedLinks() {
+    return this.storage.getAllConnections().filter((connector: Link) => connector.isActive())
+  }
+
   initEvent() {
     this._zr.on('mousedown', (e: zrender.ElementEvent) => {
       const target: IAnchorPoint = e.target
@@ -90,7 +218,7 @@ class Painter {
         this.isCreatingConnection = true
 
         // 创建连线
-        this.activeLink = new Link({ fromAnchor: target.anchor, painter: this, lineType: this.lineType })
+        this.activeLink = new Link({ fromAnchor: target.anchor, painter: this, lineType: this.shapeLinkType })
         this.activeLink.setFromNode(target.node!)
         this.addConnection(this.activeLink)
       }
@@ -98,6 +226,7 @@ class Painter {
       if (!e.target) {
         // 如果什么都没选中的话
         this.unActive()
+        this._zr.trigger('selectCanvas', this)
       }
     })
 

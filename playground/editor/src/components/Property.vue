@@ -1,12 +1,36 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { useEditorStore } from '@/stores/editor'
+import CanvasProperty from './elementProperty/CanvasProperty.vue'
+import NodeProperty from './elementProperty/NodeProperty.vue'
+import LinkProperty from './elementProperty/LinkProperty.vue'
 
-const title = ref('节点属性')
+const selectNameMap: Record<string, string> = {
+  canvas: '画布属性',
+  shape: '节点属性',
+  link: '连线属性'
+}
+
+const editorStore = useEditorStore()
+
+const title = ref('')
+
+watch(
+  () => editorStore.currentActiveProperty,
+  (newVal) => {
+    title.value = selectNameMap[newVal]
+  }
+)
 </script>
 
 <template>
   <div class="property">
     <div class="property-title">{{ title }}</div>
+    <div class="property-content">
+      <CanvasProperty v-show="editorStore.currentActiveProperty === 'canvas'" />
+      <NodeProperty v-show="editorStore.currentActiveProperty === 'shape'" />
+      <LinkProperty v-show="editorStore.currentActiveProperty === 'link'" />
+    </div>
   </div>
 </template>
 

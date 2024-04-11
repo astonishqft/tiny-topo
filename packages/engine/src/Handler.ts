@@ -19,7 +19,7 @@ class Handler {
     })
 
     shapeInstance?.on('dragstart',() => {
-      console.log('dragstart')
+      // console.log('dragstart')
     })
 
     shapeInstance?.on('dragend',() => {
@@ -27,7 +27,13 @@ class Handler {
     })
 
     shapeInstance?.on('click',() => {
-      console.log('click')
+      this.painter.unActive()
+      this.shape.active()
+      this.painter._zr.trigger('selectNode', this.shape)
+    })
+
+    shapeInstance?.on('dblclick',() => {
+      this.painter._zr.trigger('dbClickNode', this.shape)
     })
 
     shapeInstance?.on('mouseover',() => { 
