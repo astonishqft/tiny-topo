@@ -50,7 +50,8 @@ const shapeConfig = {
     shape: {
       cx: 30,
       cy: 30,
-      r: 30
+      rx: 30,
+      ry: 30
     } 
   },
   roundRect: {

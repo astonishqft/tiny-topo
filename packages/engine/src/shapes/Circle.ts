@@ -14,7 +14,7 @@ class Circle extends Shape {
   getShape(): zrender.Displayable {
     const { style, shape} = zrender.util.clone(shapeConfig['circle'])
     const textConfig = getDefaultTextConfig()
-    this.shapeInstance = new zrender.Circle({
+    this.shapeInstance = new zrender.Ellipse({
       shape: {
         ...shape,
         cx: this.x,

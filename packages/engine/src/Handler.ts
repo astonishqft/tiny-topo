@@ -16,6 +16,7 @@ class Handler {
     
     shapeInstance?.on('drag',() => {
       this.refreshConnections()
+      this.painter.controlFrame.hide()
     })
 
     shapeInstance?.on('dragstart',() => {
@@ -30,6 +31,7 @@ class Handler {
       this.painter.unActive()
       this.shape.active()
       this.painter._zr.trigger('selectNode', this.shape)
+      this.painter.controlFrame.active(this.shape, this.shape.getBoundingRect())
     })
 
     shapeInstance?.on('dblclick',() => {

@@ -5,6 +5,7 @@ import Rect from './shapes/Rect'
 import Circle from './shapes/Circle'
 import RoundRect from './shapes/RoundRect'
 import Link from './Link'
+import ControlFrame from './ControlFrame'
 import type { IAnchorPoint } from './types'
 import type { BuiltinTextPosition } from 'zrender/lib/core/types'
 
@@ -16,12 +17,15 @@ class Painter {
   selectedAnchor: zrender.Element | null = null // 被选中的锚点
   activeLink: Link | null = null // 当前激活的连接线
   shapeLinkType: string = 'ortogonalLine'
+  controlFrame: ControlFrame
 
   constructor(dom: HTMLElement, opts: zrender.ZRenderInitOpt, storage: Storage) {
     this.storage = storage
     this._zr = zrender.init(dom, opts)
     this._layer = new zrender.Group()
     this._zr.add(this._layer)
+    this.controlFrame = new ControlFrame(this)
+    this.controlFrame.addSelfTo()
     this.initEvent()
   }
 
@@ -68,6 +72,7 @@ class Painter {
   unActive() {
     this.unActiveConnections()
     this.unActiveShapes()
+    this.controlFrame.hide()
   }
 
   unActiveConnections() {
