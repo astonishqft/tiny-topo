@@ -53,7 +53,7 @@ export class Rectangle {
     let rectY = rectangle.top
     let rectW = rectangle.width
     let rectH = rectangle.height
-    return (rectX < thisX + thisW) && (thisX < (rectX + rectW)) && (rectY < thisY + thisH) && (thisY < rectY + rectH)
+    return (rectX <= thisX + thisW) && (thisX <= (rectX + rectW)) && (rectY <= thisY + thisH) && (thisY <= rectY + rectH)
   }
 
   // 判断某个点是否在矩形内
