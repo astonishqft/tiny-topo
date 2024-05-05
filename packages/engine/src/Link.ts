@@ -390,6 +390,9 @@ class Link extends zrender.Group {
 
   // 计算正交连线的中点坐标
   calcOrtogonalLineMidPoint() {
+    if (this.ortogonalLinePoints.length === 0) {
+      return [this.fromAnchor!.x, this.fromAnchor!.y]
+    }
     let accList: number[] = [0]
     let directionList = []
     for (let i = 1; i< this.ortogonalLinePoints.length; i++) {
